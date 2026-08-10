@@ -1,0 +1,74 @@
+import { Link } from "@tanstack/react-router";
+import { GraduationCap } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="mt-20 surface-navy">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+          <div>
+            <div className="flex min-w-0 items-center gap-2.5">
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-navy-foreground/10">
+                <GraduationCap className="size-5" />
+              </span>
+              <span className="font-display text-lg font-bold">Topper Dream</span>
+            </div>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-navy-foreground/70">
+              Daily JEE study materials, notes, PYQs and practice PDFs — organised subject-wise so
+              you spend time studying, not searching.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-gold">Quick Links</h3>
+            <ul className="mt-4 space-y-2.5 text-sm text-navy-foreground/75">
+              <li>
+                <Link to="/daily" className="hover:text-navy-foreground">
+                  Daily PDFs
+                </Link>
+              </li>
+              <li>
+                <Link to="/subjects" className="hover:text-navy-foreground">
+                  Subjects
+                </Link>
+              </li>
+              <li>
+                <Link to="/announcements" className="hover:text-navy-foreground">
+                  Announcements
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-gold">More</h3>
+            <ul className="mt-4 space-y-2.5 text-sm text-navy-foreground/75">
+              <li>
+                <Link to="/about" className="hover:text-navy-foreground">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-navy-foreground">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin" className="hover:text-navy-foreground">
+                  Admin Login
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-2 border-t border-navy-foreground/15 pt-6 text-sm text-navy-foreground/70 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            Developed by <span className="font-semibold text-gold">Ghanshyam Roy</span>
+          </p>
+          <p>© {new Date().getFullYear()} Topper Dream. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
