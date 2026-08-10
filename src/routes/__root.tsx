@@ -77,11 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Topper Dream — Daily JEE Study Material PDFs" },
+      {
+        name: "description",
+        content:
+          "Daily JEE notes, DPPs, PYQs and practice PDFs for Physics, Chemistry and Mathematics.",
+      },
+      { name: "author", content: "Ghanshyam Roy" },
+      { property: "og:title", content: "Topper Dream — Daily JEE Study Material PDFs" },
+      {
+        property: "og:description",
+        content: "Daily JEE notes, DPPs, PYQs and practice PDFs, organised subject-wise.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -121,6 +128,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
 }

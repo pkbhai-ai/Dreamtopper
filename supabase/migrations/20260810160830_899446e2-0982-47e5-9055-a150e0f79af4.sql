@@ -1,0 +1,4 @@
+CREATE POLICY "Admins can upload materials" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'materials' AND public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admins can update material files" ON storage.objects FOR UPDATE TO authenticated USING (bucket_id = 'materials' AND public.has_role(auth.uid(), 'admin')) WITH CHECK (bucket_id = 'materials' AND public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admins can delete material files" ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'materials' AND public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admins can read material files" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'materials' AND public.has_role(auth.uid(), 'admin'));
