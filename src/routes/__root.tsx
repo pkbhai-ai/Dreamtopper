@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (
@@ -124,6 +125,41 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Handle OAuth / redirect-based auth flows that return tokens in the URL.
+  // Supabase and some OAuth providers return tokens or codes in the URL after redirect.
+  // Ensure we parse and store the session so the app recognises the logged-in user.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const shouldProcess = window.location.hash.includes("access_token=") || window.location.search.includes("code=");
+    if (!shouldProcess) return;
+
+    (async () => {
+      try {
+        // supabase-js v2 exposes getSessionFromUrl which parses the redirect URL and stores the session.
+        // Use optional chaining to avoid runtime errors if the method is not present.
+        const authAny = (supabase.auth as any);
+        if (typeof authAny.getSessionFromUrl === "function") {
+          await authAny.getSessionFromUrl({ storeSession: true });
+        } else if (typeof authAny.getSession === "function") {
+          // Fallback: some integrations will have already set the session, so attempt to read it.
+          await authAny.getSession();
+        }
+      } catch (e) {
+        // ignore: session parsing is best-effort
+        // console.error('Error processing auth redirect:', e);
+      } finally {
+        // Clean the URL to remove tokens or codes so the app routes normally.
+        try {
+          const clean = window.location.pathname + window.location.search;
+          window.history.replaceState({}, document.title, clean);
+        } catch (e) {
+          // ignore
+        }
+      }
+    })();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
