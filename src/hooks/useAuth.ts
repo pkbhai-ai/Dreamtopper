@@ -7,15 +7,25 @@ export function useSession() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
+    let active = true;
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
+      if (!active) return;
+      // INITIAL_SESSION can fire with null before the persisted session is
+      // restored from storage; only trust it once loading has resolved.
       setSession(s);
-      setLoading(false);
+      if (event !== "INITIAL_SESSION" || s) setLoading(false);
     });
+
     supabase.auth.getSession().then(({ data }) => {
+      if (!active) return;
       setSession(data.session);
       setLoading(false);
     });
-    return () => sub.subscription.unsubscribe();
+
+    return () => {
+      active = false;
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
   return { session, user: session?.user ?? null, loading };
@@ -30,14 +40,12 @@ export function useIsAdmin(userId: string | undefined) {
       setIsAdmin(null);
       return;
     }
+    setIsAdmin(null);
     supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", userId)
-      .eq("role", "admin")
-      .maybeSingle()
-      .then(({ data }) => {
-        if (active) setIsAdmin(Boolean(data));
+      .rpc("has_role", { _user_id: userId, _role: "admin" })
+      .then(({ data, error }) => {
+        if (!active) return;
+        setIsAdmin(error ? false : Boolean(data));
       });
     return () => {
       active = false;
