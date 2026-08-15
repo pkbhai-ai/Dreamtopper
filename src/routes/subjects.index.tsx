@@ -37,7 +37,7 @@ function SubjectsPage() {
           Choose a subject to see its chapters and materials.
         </p>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SUBJECTS.map((subject) => {
             const meta = SUBJECT_META[subject]!;
             const rows = (all.data ?? []).filter((m) => m.subject === subject);

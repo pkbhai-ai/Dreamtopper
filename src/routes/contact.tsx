@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MessageCircle, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
+import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 
@@ -30,7 +31,6 @@ const CHANNELS = [
     href: "mailto:topperdream.help@gmail.com",
   },
   { icon: Send, label: "Telegram", value: "@topperdream", href: "https://t.me/topperdream" },
-  { icon: MessageCircle, label: "WhatsApp", value: "Join the study group", href: "#" },
 ];
 
 function ContactPage() {
@@ -44,7 +44,11 @@ function ContactPage() {
           it — usually within a day.
         </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8">
+          <WhatsAppButton className="w-full sm:w-auto" />
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {CHANNELS.map((c) => (
             <a
               key={c.label}

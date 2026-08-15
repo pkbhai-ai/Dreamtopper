@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { GraduationCap } from "lucide-react";
+import { WhatsAppButton } from "@/components/site/WhatsAppButton";
+import { CREDITS } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -17,6 +19,7 @@ export function Footer() {
               Daily JEE study materials, notes, PYQs and practice PDFs — organised subject-wise so
               you spend time studying, not searching.
             </p>
+            <WhatsAppButton className="mt-5 w-full sm:w-auto" />
           </div>
 
           <div>
@@ -62,10 +65,26 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-navy-foreground/15 pt-6 text-sm text-navy-foreground/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            Developed by <span className="font-semibold text-gold">Ghanshyam Roy</span>
-          </p>
+        <div className="mt-10 border-t border-navy-foreground/15 pt-6">
+          <h3 className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold">Credits</h3>
+          <dl className="mt-3 grid gap-3 sm:grid-cols-3">
+            {CREDITS.map((c) => (
+              <div
+                key={c.role}
+                className="min-w-0 rounded-xl border border-navy-foreground/15 bg-navy-foreground/5 px-4 py-3"
+              >
+                <dt className="text-[11px] font-semibold uppercase tracking-wide text-navy-foreground/60">
+                  {c.role}
+                </dt>
+                <dd className="mt-0.5 truncate text-sm font-semibold text-navy-foreground">
+                  {c.name}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="mt-6 border-t border-navy-foreground/15 pt-6 text-sm text-navy-foreground/70">
           <p>© {new Date().getFullYear()} Topper Dream. All rights reserved.</p>
         </div>
       </div>
