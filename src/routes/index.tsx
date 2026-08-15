@@ -96,7 +96,7 @@ function Home() {
         <p className="mt-2 text-sm text-muted-foreground">
           Pick your subject and get straight to the chapter you are revising today.
         </p>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SUBJECTS.map((subject) => {
             const meta = SUBJECT_META[subject]!;
             return (

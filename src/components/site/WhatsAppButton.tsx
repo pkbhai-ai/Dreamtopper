@@ -23,7 +23,7 @@ export function WhatsAppButton({
       }}
       aria-label={label}
       className={cn(
-        "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-sm font-bold text-[#08341a] shadow-soft transition-opacity hover:opacity-90",
+        "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-2.5 text-sm font-bold text-whatsapp-foreground shadow-soft transition-opacity hover:opacity-90",
         className,
       )}
     >
