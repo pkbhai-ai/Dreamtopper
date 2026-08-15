@@ -30,7 +30,6 @@ const CHANNELS = [
     href: "mailto:topperdream.help@gmail.com",
   },
   { icon: Send, label: "Telegram", value: "@topperdream", href: "https://t.me/topperdream" },
-  { icon: MessageCircle, label: "WhatsApp", value: "Join the study group", href: "#" },
 ];
 
 function ContactPage() {
