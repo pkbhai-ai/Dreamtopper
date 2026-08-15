@@ -57,6 +57,9 @@
   --color-physics: var(--physics);
   --color-chemistry: var(--chemistry);
   --color-maths: var(--maths);
+  --color-pyq: var(--pyq);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -106,6 +109,9 @@
   --physics: oklch(0.64 0.16 245);
   --chemistry: oklch(0.68 0.15 160);
   --maths: oklch(0.7 0.16 40);
+  --pyq: oklch(0.62 0.16 300);
+  --whatsapp: oklch(0.78 0.19 150);
+  --whatsapp-foreground: oklch(0.24 0.06 160);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);

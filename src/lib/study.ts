@@ -1,4 +1,4 @@
-export const SUBJECTS = ["Physics", "Chemistry", "Mathematics"] as const;
+export const SUBJECTS = ["Physics", "Chemistry", "Mathematics", "PYQ"] as const;
 export type Subject = (typeof SUBJECTS)[number];
 
 export const MATERIAL_TYPES = [
@@ -33,6 +33,12 @@ export const SUBJECT_META: Record<
     blurb: "Calculus, Algebra, Coordinate Geometry — solved sets and formula sheets.",
     accent: "text-maths",
     dot: "bg-maths",
+  },
+  PYQ: {
+    slug: "pyq",
+    blurb: "Previous year questions — JEE Main and Advanced papers with solutions.",
+    accent: "text-pyq",
+    dot: "bg-pyq",
   },
 };
 
