@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { GraduationCap, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -33,6 +34,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
+          <WhatsAppButton className="mr-1 px-3 py-2 text-xs" label="WhatsApp" />
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -73,6 +75,7 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <WhatsAppButton className="mt-2 w-full" />
           <Button asChild className="mt-2 w-full rounded-lg">
             <Link to="/admin" onClick={() => setOpen(false)}>
               Admin Login
