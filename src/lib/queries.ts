@@ -63,6 +63,27 @@ export const statsQuery = (today: string) =>
     },
   });
 
+export const subjectCountsQuery = () =>
+  queryOptions({
+    queryKey: ["materials", "subject-counts"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("materials")
+        .select("subject, chapter")
+        .eq("published", true);
+      if (error) throw error;
+      const counts: Record<string, { pdfs: number; chapters: Set<string> }> = {};
+      for (const row of data ?? []) {
+        const entry = (counts[row.subject] ??= { pdfs: 0, chapters: new Set<string>() });
+        entry.pdfs += 1;
+        entry.chapters.add(row.chapter);
+      }
+      return Object.fromEntries(
+        Object.entries(counts).map(([k, v]) => [k, { pdfs: v.pdfs, chapters: v.chapters.size }]),
+      ) as Record<string, { pdfs: number; chapters: number }>;
+    },
+  });
+
 export const announcementsQuery = () =>
   queryOptions({
     queryKey: ["announcements"],
