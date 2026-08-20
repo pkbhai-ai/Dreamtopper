@@ -8,10 +8,12 @@ import { EMPTY_FILTERS, FilterBar, type Filters } from "@/components/site/Filter
 import { publicMaterialsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/daily")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search['q'] === "string" ? (search['q'] as string) : undefined,
-    subject: typeof search['subject'] === "string" ? (search['subject'] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { q?: string; subject?: string } => {
+    const out: { q?: string; subject?: string } = {};
+    if (typeof search['q'] === "string" && search['q']) out.q = search['q'];
+    if (typeof search['subject'] === "string" && search['subject']) out.subject = search['subject'];
+    return out;
+  },
   head: () => ({
     meta: [
       { title: "Daily PDFs — Topper Dream JEE Materials" },
