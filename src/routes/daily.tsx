@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Header } from "@/components/site/Header";
@@ -8,6 +8,12 @@ import { EMPTY_FILTERS, FilterBar, type Filters } from "@/components/site/Filter
 import { publicMaterialsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/daily")({
+  validateSearch: (search: Record<string, unknown>): { q?: string; subject?: string } => {
+    const out: { q?: string; subject?: string } = {};
+    if (typeof search['q'] === "string" && search['q']) out.q = search['q'];
+    if (typeof search['subject'] === "string" && search['subject']) out.subject = search['subject'];
+    return out;
+  },
   head: () => ({
     meta: [
       { title: "Daily PDFs — Topper Dream JEE Materials" },
@@ -27,7 +33,16 @@ export const Route = createFileRoute("/daily")({
 });
 
 function DailyPage() {
-  const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
+  const { q, subject } = Route.useSearch();
+  const [filters, setFilters] = useState<Filters>({
+    ...EMPTY_FILTERS,
+    search: q ?? "",
+    subject: subject ?? "",
+  });
+
+  useEffect(() => {
+    setFilters((prev) => ({ ...prev, search: q ?? "", subject: subject ?? "" }));
+  }, [q, subject]);
   const all = useQuery(publicMaterialsQuery());
 
   const chapters = useMemo(() => {
@@ -39,8 +54,12 @@ function DailyPage() {
   const results = useMemo(() => {
     const term = filters.search.trim().toLowerCase();
     return (all.data ?? []).filter((m) => {
-      if (term && !m.title.toLowerCase().includes(term) && !m.chapter.toLowerCase().includes(term))
-        return false;
+      if (term) {
+        const haystack = [m.title, m.subject, m.chapter, m.material_type, m.description ?? ""]
+          .join(" ")
+          .toLowerCase();
+        if (!haystack.includes(term)) return false;
+      }
       if (filters.subject && m.subject !== filters.subject) return false;
       if (filters.chapter && m.chapter !== filters.chapter) return false;
       if (filters.type && m.material_type !== filters.type) return false;
